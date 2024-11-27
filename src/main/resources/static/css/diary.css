@@ -1,0 +1,49 @@
+/* style.css */
+
+/* Стиль для поисковой строки */
+#search-container {
+    margin-bottom: 20px;
+}
+
+#search-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Стиль для плашки с результатами поиска */
+#search-results {
+    display: none;  /* Изначально скрыто */
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+#search-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#search-results li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#search-results li:last-child {
+    border-bottom: none;
+}
+
+#search-results .hidden {
+    display: none;
+}

@@ -1,0 +1,12 @@
+.star {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.filled-star {
+    color: gold; /* Закрашенные звёзды */
+}
+
+.empty-star {
+    color: lightgray; /* Пустые звёзды */
+}

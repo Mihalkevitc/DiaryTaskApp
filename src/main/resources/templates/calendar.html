@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/png/diary.png" type="image/png" sizes="32x32">
+    <title>Календарь</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Общие стили для страницы */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .today {
+            background-color: #e0f7fa; /* Светло-голубой фон для текущего дня */
+            font-weight: bold;
+            border-radius: 50%;
+        }
+
+        .task-date {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #007bff;
+            transition: all 0.3s ease; /* Плавный переход для эффектов */
+            font-size: 1.5rem; /* Увеличиваем размер шрифта */
+            font-weight: bold; /* Увеличиваем жирность для выделения */
+        }
+
+        .task-date:hover {
+            color: #0056b3;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .has-tasks {
+            background-color: #ffeb3b; /* Желтый для дней с задачами */
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .calendar-header a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar-header a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table td {
+            height: 80px;
+            width: 80px;
+            vertical-align: middle;
+            transition: background-color 0.3s ease;
+        }
+
+        .table .today {
+            background-color: #ffeb3b;
+        }
+
+        .table td:hover {
+            background-color: #e0f7fa; /* Цвет при наведении на ячейку */
+        }
+
+        .table-light th {
+            background-color: #f1f1f1;
+        }
+
+        /* Отступы для дней недели */
+        .table th, .table td {
+            padding: 10px;
+        }
+
+        /* Стили для кнопки */
+        .task-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 1rem;
+            color: #6c757d; /* Более приглушённый цвет текста */
+            background-color: #f8f9fa;
+            border: 1px solid #6c757d;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .task-button:hover {
+            background-color: #6c757d;
+            color: white;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+    <div class="calendar-header">
+        <h1>Календарь на <span th:text="${currentMonth}"></span></h1>
+        <div>
+            <a th:href="@{/tasks/calendar/{month}(month=${previousMonth})}" class="btn btn-outline-primary">◀ Предыдущий месяц</a>
+            <a th:href="@{/tasks/calendar/{month}(month=${nextMonth})}" class="btn btn-outline-primary">Следующий месяц ▶</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered text-center">
+        <thead class="table-light">
+        <tr>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+            <th>Сб</th>
+            <th>Вс</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="week : ${weeks}">
+            <td th:each="day : ${week}"
+                th:class="${day.month == currentMonth.month ? (tasksByDate[day] != null ? 'has-tasks' : '') : ''} + ' ' + ${day == currentDate ? 'today' : ''}">
+                <span th:if="${day.month == currentMonth.month}"
+                      class="task-date"
+                      th:data-date="${day}"
+                      th:data-tasks="${tasksByDate[day] != null ? #strings.arrayJoin(tasksByDate[day], ', ') : ''}"
+                      th:text="${day.dayOfMonth}">
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a href="/tasks/today" class="task-button">Задачи на день</a>
+
+<script>
+    // Скрипт для отладки tasksByDate
+    document.querySelectorAll('.task-date').forEach(el => {
+        el.addEventListener('click', (e) => {
+            const date = e.target.dataset.date;
+            window.location.href = '/tasks/' + date;
+        });
+    });
+</script>
+
+<!-- Подключаем Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/png/diary.png" type="image/png" sizes="32x32">
+    <title th:text="'Задачи на ' + ${currentDate}">Задачи</title>
+
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <style>
+        #currentDate{
+        font-size: 4.5 rem;
+        }
+
+        #task-stats .stat-item {
+            background-color: #f8f9fa; /* светлый фон для блока */
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #task-stats .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        #task-stats .stat-text {
+            margin-left: 10px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        #task-stats .bi {
+            font-size: 24px;
+            color: #007bff; /* синий цвет для иконок */
+        }
+
+        /* Отделение текста и иконки */
+        #task-stats .col-4 {
+            margin-bottom: 10px;
+        }
+
+        #last_btn{
+        margin-bottom:30px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Заголовок с текущей датой -->
+    <h1 id="currentDate" th:text="'Задачи на ' + ${currentDate}" th:attr="data-current-date=${currentDate}" class="text-center mb-4"></h1>
+
+    <div class="row mb-4">
+        <!-- Время на текущий момент -->
+        <div class="col-12">
+            <h2 id="current-time" class="text-center"></h2>
+        </div>
+    </div>
+
+    <!-- Ссылки для создания новой задачи и перехода в календарь -->
+    <div class="d-flex justify-content-between mb-4">
+        <a href="/tasks/new" class="btn btn-primary">Создать новую задачу</a>
+        <a th:href="@{/tasks/calendar/{yearMonth}(yearMonth=${yearMonth})}" class="btn btn-secondary">Календарь</a>
+    </div>
+
+    <!-- Статистика задач -->
+    <div id="task-stats" class="row mb-4">
+        <div class="col-4">
+            <div class="stat-item">
+                <i class="bi bi-check-all"></i>
+                <p class="stat-text">Всего задач: <span id="totalTasks">0</span></p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="stat-item">
+                <i class="bi bi-check-circle"></i>
+                <p class="stat-text">Выполнено: <span id="completedTasks">0</span></p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="stat-item">
+                <i class="bi bi-circle"></i>
+                <p class="stat-text">Надо сделать: <span id="uncompletedTasks">0</span></p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Прогресс-бар -->
+    <div class="mb-4">
+        <p>Завершено задач: <span id="completionPercentage">0</span>%</p>
+        <progress id="progressBar" value="0" max="100" class="w-100"></progress>
+    </div>
+
+    <!-- Мотивационное сообщение -->
+    <div class="alert alert-info" id="motivationMessage">Не теряй время, давай начни с самых простых задач! ⏳😅</div>
+
+    <!-- Таблица задач -->
+    <div th:if="${tasks.isEmpty()}">
+        <p class="text-center">На сегодня нет задач.</p>
+    </div>
+
+    <div th:if="${!tasks.isEmpty()}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Описание</th>
+                <th>Время</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Перебор задач -->
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}">Заголовок</td>
+                <td th:text="${task.content}">Описание</td>
+                <td th:text="${task.startTime + ' - ' + task.endTime}">Время</td>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               th:checked="${task.completed}"
+                               th:attr="data-task-id=${task.id}, data-completed=${task.completed}"
+                               class="form-check-input task-checkbox">
+                        <label class="form-check-label">Задача выполнена</label>
+                    </div>
+                </td>
+                <td>
+                    <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="get" class="d-inline-block">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                    <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-warning btn-sm">Редактировать</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Ссылка назад к дневнику -->
+    <a href="/diary" id="last_btn" class="btn btn-secondary">Назад к дневнику</a>
+</div>
+
+<!-- Подключение скриптов -->
+<script src="/static/js/completed.js"></script>
+<script src="/static/js/statisticsForTask.js"></script>
+<script src="/static/js/updateClockTask.js"></script>
+
+
+<!-- Подключение Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

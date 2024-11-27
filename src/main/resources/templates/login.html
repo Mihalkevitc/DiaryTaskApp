@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/png/diary.png" type="image/png" sizes="32x32">
+    <title>Авторизация</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение темной темы -->
+    <style>
+        body {
+            background-color: #212529; /* Темный фон */
+            color: #f8f9fa; /* Светлый текст */
+        }
+        .form-control, .btn, a {
+            transition: 0.3s ease; /* Плавные переходы */
+        }
+        .form-control:focus {
+            border-color: #6c757d;
+            box-shadow: 0 0 5px rgba(108, 117, 125, 0.5);
+        }
+        a {
+            color: #0d6efd; /* Цвет ссылки */
+        }
+        a:hover {
+            color: #0a58ca; /* Более насыщенный при наведении */
+        }
+        .card {
+            width: 500px; /* Фиксированная ширина */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); /* Более тёмная и явная тень */
+            border: none; /* Убираем рамку */
+        }
+        @media (max-width: 576px) {
+            .card {
+                width: 100%; /* На маленьких экранах форма занимает всю ширину */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card bg-dark text-white p-4">
+        <h2 class="text-center mb-4">Вход</h2>
+        <form action="/login" method="POST">
+            <!-- Поле для имени пользователя -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя:</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Введите имя" required>
+            </div>
+            <!-- Поле для пароля -->
+            <div class="mb-4">
+                <label for="password" class="form-label">Пароль:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required>
+            </div>
+            <!-- Отправка формы -->
+            <button type="submit" class="btn btn-primary w-100">Войти</button>
+        </form>
+        <!-- Ссылка на страницу регистрации -->
+        <p class="mt-3 text-center">
+            Нет аккаунта? <a href="/registration">Зарегистрироваться</a>
+        </p>
+    </div>
+</div>
+<!-- Bootstrap JS (по желанию) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

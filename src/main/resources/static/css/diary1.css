@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+header nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.entries-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.entry-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.entry-title {
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+}
+
+.entry-date {
+    font-size: 0.9em;
+    color: #777;
+    margin: 5px 0;
+}
+
+.entry-content {
+    margin: 10px 0;
+    color: #555;
+}
+
+.entry-importance {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.star {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.filled-star {
+    color: #FFD700;
+}
+
+.empty-star {
+    color: #ddd;
+}
+
+.entry-actions a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.entry-actions a:hover {
+    text-decoration: underline;
+}
+
+.pagination {
+    text-align: center;
+    padding: 10px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.pagination span {
+    color: #555;
+}
