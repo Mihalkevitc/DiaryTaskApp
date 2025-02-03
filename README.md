@@ -23,11 +23,11 @@
 - Тестируемость: удобное тестирование на всех уровнях.
 
 ## Стек технологий
-- Backend: Java, Spring Boot, Spring Data JPA, Spring Security.
-- Frontend: HTML, Thymeleaf, JavaScript, CSS, Bootstrap.
-- Database: PostgreSQL.
-- DevOps: Docker.
-- Tools: Maven (система сборки), Postman (тестирование API).
+- **Backend**: Java, Spring Boot, Spring Data JPA, Spring Security.
+- **Frontend**: HTML, Thymeleaf, JavaScript, CSS, Bootstrap.
+- **Database**: PostgreSQL.
+- **DevOps**: Docker.
+- **Tools**: Maven (система сборки), Postman (тестирование API).
 
 ## Пользовательский интерфейс
 ### Форма авторизации:
